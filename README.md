@@ -2,10 +2,14 @@
 still need update
 
 
-client.py
+
+client.py 目前功能：
 - basic connection
 - Join channel #testset by default
 - Ping/Pong
 - Can receive messege from server and other clients
+ 
 
-- Still need update after server be constructed 
+
+- 可以先用這個充當server：　　https://kiwiirc.com/client/irc.freenode.net/
+- 未完成，要等server能傳特殊指令給client才能繼續做下去 
