@@ -2,7 +2,9 @@
 still need update
 
 ------------------------------------------------------
-
+server.c 和 client.c
+ - 被文貴打槍的寫法，基本上可以先不看，但是也可以參考
+------------------------------------------------------
 
 client.py 目前功能：
 - 基本連線
@@ -17,5 +19,5 @@ client.py 目前功能：
 - 未完成，要等server能傳特殊指令給client才能繼續做下去 
 
 client.py 獨立於server之待完成功能：
-- 可以讀keyboard and 傳訊息給server
+- 可以讀keyboard and 傳訊息給server (PRIVMSG)
 - Unique Nickname created by hash
