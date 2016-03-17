@@ -1,30 +1,12 @@
 import socket
-
-
-
-bot_owner = "Jakash3"
-chan = "#testset"
-irc = socket.socket()
-irc.connect(("irc.freenode.net",6667))
-nick = "dfddhdhdh"
-
-#nick = raw_input(">>> Nickname: ")
-irc.send("USER " + nick + " 0 * :" + bot_owner + "\r\n")
-irc.send("NICK " + nick + "\r\n")
-
-
+import sys
+import string
+import random
+import thread
+import time
 #---------------------------------- Functions -------------------------------------#
-
-
-def readAdmin(host):                        # Return status 0/1
-    bestand = open('admins.txt', 'r')
-    for line in bestand:
-        if host in line:
-            status = 1
-            return status
-        else:
-            status = 0
-            return status
+def id_generator(size=10, chars=string.ascii_uppercase + string.ascii_lowercase):
+    return ''.join(random.choice(chars) for _ in range(size))
 
 def GetHost(host):                            # Return Host
     host = host.split('@')[1]
@@ -45,7 +27,7 @@ def GetNick(data):                            # Return Nickname
     nick = nick.strip(' \t\n\r')
     return nick
 
-def Send(msg):
+def PRIVMSG(msg):
     irc.send('PRIVMSG ' + chan + ' : ' + msg +  '\r\n')
 
 def Join(chan):
@@ -65,19 +47,58 @@ def Voice(to_v, chan):
 
 def DeVoice(to_dv, chan):
     irc.send( 'MODE ' + chan + ' -v: ' + to_dv + '\r\n')
+
 #------------------------------------------------------------------------------#
+def RECEIVE():
+    while True:
+        action = 'none'
+        data = irc.recv ( 4096 )
+        print(data)
+
+        if data.find ( 'Welcome to the freenode Internet Relay Chat Network ' + nick) != -1:
+                irc.send ( 'JOIN ' + chan + '\r\n' )
+
+        if data.find ( 'PING' ) != -1:
+                irc.send ( 'PONG ' + data.split() [ 1 ] + '\r\n' )
+
+        #--------------------------- Action check --------------------------------#
+        if data.find('#') != -1:
+            action = data.split('#')[0]
+            action = action.split(' ')[1]
+            #print action
+         
+        #----------------------------- Actions -----------------------------------#
+        if action != 'none':
+            if action == 'PRIVMSG':
+                if data.find('!') != -1:
+                    sender = GetNick(data)
+                    raw_msg = data.split(':')[2]
+                    print sender + " said: " + raw_msg
 
 
+def SEND():
+    while True:
+        msg = raw_input()
+        if msg[0] == '/':
+            irc.send(msg.strip('/') + '\r\n')
+        else:
+            PRIVMSG(msg)
 
-while True:
-    action = 'none'
-    data = irc.recv ( 4096 ) 
-    print data
+        
 
-    if data.find ( 'Welcome to the freenode Internet Relay Chat Network '+nick) != -1:
-            Join(chan)
-    if data.find ( 'PING' ) != -1:
-            irc.send ( 'PONG ' + data.split() [ 1 ] + '\r\n' )
-    
-   
-    
+if __name__ == "__main__":
+    #--------------------------- Connect to server and login w/ an unique NICK name--------------------------------#
+    irc = socket.socket()
+    irc.connect(("irc.freenode.net",6667))
+    bot_owner = "jtlin"
+    nick = id_generator()
+    chan = "#testset"
+    irc.send(("USER " + nick + " 0 * :" + bot_owner + "\r\n").encode())
+    irc.send(("NICK " + nick + "\r\n").encode())
+
+    lock = thread.allocate_lock()
+    thread.start_new_thread(RECEIVE,())
+    thread.start_new_thread(SEND,())
+
+    while (True):
+        pass 
