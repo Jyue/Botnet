@@ -33,21 +33,6 @@ def PRIVMSG(msg):
 def Join(chan):
     irc.send ( 'JOIN ' + chan + '\r\n' )
 
-def Part(chan):
-    irc.send ( 'PART ' + chan + '\r\n' )
-
-def Op(to_op, chan):
-    irc.send( 'MODE ' + chan + ' +o: ' + to_op + '\r\n')
-
-def DeOp(to_deop, chan):
-    irc.send( 'MODE ' + chan + ' -o: ' + to_deop + '\r\n')
-
-def Voice(to_v, chan):
-    irc.send( 'MODE ' + chan + ' +v: ' + to_v + '\r\n')
-
-def DeVoice(to_dv, chan):
-    irc.send( 'MODE ' + chan + ' -v: ' + to_dv + '\r\n')
-
 #------------------------------------------------------------------------------#
 def RECEIVE():
     while True:
