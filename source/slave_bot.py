@@ -66,7 +66,7 @@ def RECEIVE():
                     if raw_msg.find('$SPAM') != -1:
                         print "=== Do Spam...... ==="
                         NOTICE(sender, '***Spam***')
-                    else if raw_msg.find('$DDOS') != -1:
+                    elif raw_msg.find('$DDOS') != -1:
                         print "=== Do DDOS...... ==="
                         NOTICE(sender, '***DDOS***')
                     else:
