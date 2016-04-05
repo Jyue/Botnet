@@ -33,20 +33,10 @@ def PRIVMSG(msg):
 def Join(chan):
     irc.send ( 'JOIN ' + chan + '\r\n' )
 
-def Part(chan):
-    irc.send ( 'PART ' + chan + '\r\n' )
+def NOTICE(nick, msg):
+    irc.send('notice ' + nick + ' : ' + msg +  '\r\n')
 
-def Op(to_op, chan):
-    irc.send( 'MODE ' + chan + ' +o: ' + to_op + '\r\n')
 
-def DeOp(to_deop, chan):
-    irc.send( 'MODE ' + chan + ' -o: ' + to_deop + '\r\n')
-
-def Voice(to_v, chan):
-    irc.send( 'MODE ' + chan + ' +v: ' + to_v + '\r\n')
-
-def DeVoice(to_dv, chan):
-    irc.send( 'MODE ' + chan + ' -v: ' + to_dv + '\r\n')
 
 #------------------------------------------------------------------------------#
 def RECEIVE():
@@ -73,7 +63,16 @@ def RECEIVE():
                 if data.find('!') != -1:
                     sender = GetNick(data)
                     raw_msg = data.split(':')[2]
-                    print sender + " said: " + raw_msg
+                    if raw_msg.find('$SPAM') != -1:
+                        print "=== Do Spam...... ==="
+                        NOTICE(sender, '***Spam***')
+                    else if raw_msg.find('$DDOS') != -1:
+                        print "=== Do DDOS...... ==="
+                        NOTICE(sender, '***DDOS***')
+                    else:
+                        print sender + " said: " + raw_msg
+
+        irc.recv
 
 
 def SEND():
@@ -90,13 +89,13 @@ if __name__ == "__main__":
     #--------------------------- Connect to server and login w/ an unique NICK name--------------------------------#
     irc = socket.socket()
     irc.connect(("irc.freenode.net",6667))
+
     bot_owner = "jtlin"
     nick = id_generator()
     chan = "#testset"
     irc.send(("USER " + nick + " 0 * :" + bot_owner + "\r\n").encode())
     irc.send(("NICK " + nick + "\r\n").encode())
 
-    lock = thread.allocate_lock()
     thread.start_new_thread(RECEIVE,())
     thread.start_new_thread(SEND,())
 
