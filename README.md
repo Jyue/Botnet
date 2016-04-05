@@ -1,22 +1,17 @@
 # Botnet
 still need update
 
-server.c 和 client.c － 被文貴打槍的寫法，基本上可以先不看，但是也可以參考
+server.c 和 client.c － 用TCP寫的聊天室
 
 ------------------------------------------------------
 
-client.py 目前功能：
+master_bot.py
 - 基本連線
 - Join channel #testset
-- 一開始會有Nickname，以便登入
-- Ping/Pong，讓client因為timeout所以被server關掉
+- 一開始會有一個Random hash的十個英文字做Nickname，以便登入
+- 自動Ping/Pong，讓bot不會因為timeout所以被server關掉
 - 可以從server跟其他clients  receive messege
+- 特殊自訂指令:$SPAM、$DDOS (目前僅有傳字串，無實際功能)
 
-
-
-- 可以先用這個充當server：　　https://kiwiirc.com/client/irc.freenode.net/
-- 未完成，要等server能傳特殊指令給client才能繼續做下去 
-
-client.py 獨立於server之待完成功能：
-- 可以讀keyboard and 傳訊息給server (PRIVMSG)
-- Unique Nickname created by hash
+slave_bot.py
+- 基本上同master_bot.py,差別在不能發送特殊指令，只能接受master bot的指令並執行對應功能(目前僅用字串示意)
