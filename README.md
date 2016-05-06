@@ -1,7 +1,7 @@
 # Botnet
 still need update
 
-server.c 和 client.c － 用TCP寫的聊天室
+old>>server.c 和 client.c － 用TCP寫的聊天室
 
 ------------------------------------------------------
 
@@ -15,3 +15,6 @@ master_bot.py
 
 slave_bot.py
 - 基本上同master_bot.py,差別在不能發送特殊指令，只能接受master bot的指令並執行對應功能(目前僅用字串示意)
+
+master_control_panel.php
+-類似master的螢幕
