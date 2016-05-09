@@ -63,16 +63,15 @@ def RECEIVE():
                 if data.find('!') != -1:
                     sender = GetNick(data)
                     raw_msg = data.split(':')[2]
-                    if raw_msg.find('$SPAM') != -1:
-                        print "=== Do Spam...... ==="
-                        NOTICE(sender, '***Spam***')
-                    elif raw_msg.find('$DDOS') != -1:
-                        print "=== Do DDOS...... ==="
-                        NOTICE(sender, '***DDOS***')
-                    else:
-                        print sender + " said: " + raw_msg
-
-        irc.recv
+                    
+                    print sender + " said: " + raw_msg
+        else:
+            if data.find('$SPAM') != -1:
+                print "=== Do Spam...... ==="
+                NOTICE(sender, '***Spam***')
+            elif data.find('$DDOS') != -1:
+                print "=== Do DDOS...... ==="
+                NOTICE(sender, '***DDOS***')
 
 
 def SEND():

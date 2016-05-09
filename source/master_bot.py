@@ -4,6 +4,10 @@ import string
 import random
 import thread
 import time
+import SimpleHTTPServer
+import SocketServer
+import logging
+import cgi
 #---------------------------------- Functions -------------------------------------#
 def id_generator(size=10, chars=string.ascii_uppercase + string.ascii_lowercase):
     return ''.join(random.choice(chars) for _ in range(size))
@@ -49,7 +53,7 @@ def DeVoice(to_dv, chan):
     irc.send( 'MODE ' + chan + ' -v: ' + to_dv + '\r\n')
 
 #------------------------------------------------------------------------------#
-def RECEIVE():
+def RECEIVE(): #from freenode
     while True:
         action = 'none'
         data = irc.recv ( 4096 )
@@ -80,11 +84,33 @@ def SEND():
     while True:
         msg = raw_input()
         if msg[0] == '/':
-            irc.send(msg.strip('/') + '\r\n')
+                irc.send(msg.strip('/') + '\r\n')
         else:
             PRIVMSG(msg)
 
-        
+class TCPHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        #logging.warning("======= GET STARTED =======")
+        #logging.warning(self.headers)
+        SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+
+    """def do_POST(self):
+        #logging.warning("======= POST STARTED =======")
+        #logging.warning(self.headers)
+        form = cgi.FieldStorage(
+            fp=self.rfile,
+            headers=self.headers,
+            environ={'REQUEST_METHOD':'POST',
+                 'CONTENT_TYPE':self.headers['Content-Type'],
+                 })
+        #logging.warning("======= POST VALUES =======")
+        #for item in form.list:
+        #    logging.warning(item)
+        #logging.warning("\n")
+        SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)"""
+
+
+            
 
 if __name__ == "__main__":
     #--------------------------- Connect to server and login w/ an unique NICK name--------------------------------#
@@ -100,5 +126,8 @@ if __name__ == "__main__":
     thread.start_new_thread(RECEIVE,())
     thread.start_new_thread(SEND,())
 
+    SocketServer.TCPServer.allow_reuse_address = True
+    httpd = SocketServer.TCPServer(("", 8000), TCPHandler)
+    httpd.serve_forever()
     while (True):
         pass 
