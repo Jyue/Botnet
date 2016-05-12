@@ -6,7 +6,7 @@
 <body>
 <!--<img align=left src="hello.gif"  width=290 height=80></p></p>-->
 <table style="width:100%">
-	<tr><th><font size="9"><FONT COLOR="#FFFFFF"><font face="fantasy">~~~~~Master~~~~~</th></tr>
+	<tr><th><font size="9"><FONT COLOR="#000000"><font face="fantasy">Master</th></tr>
 </table>
 
 <!-- define table -->
@@ -26,23 +26,11 @@
 </table></p></p>
 
 <table style="width:100%" cellpadding=0 cellspacing=0>
-	<tr>
-		<th>
-		
-		    	<button type="submit" style="width:120px;height:40px;border:2px  outset;background-color:#00FF00;"><b><font face=\"cursive\" size=3 COLOR=#0000a0>Spam</button></p>
-	
-		</th>
-		<th>
-	
-				<button type="submit" style="width:120px;height:40px;border:2px  outset;background-color:#00FF00;"><b><font face=\"cursive\" size=3 COLOR=#0000a0>DDOS</button></p>
 
-		</th>
-			
-	</tr>
 </table>
 
 <table style="width:100%">
-	<tr><th><font size="9"><FONT COLOR="#FFFFFF"><font face="fantasy">~~~~~Slave~~~~~</th></tr>
+	<tr><th><font size="9"><FONT COLOR="#000000"><font face="fantasy">Slave</th></tr>
 </table>
 
 <!-- define table -->
@@ -74,15 +62,20 @@
 </table></p></p>
 
 <table style="width:100%" cellpadding=0 cellspacing=0>
-<th>
+	
+		
+
+	<th>
 	<form action="master_bot.py" method="POST" target="id_iframe">
-		<button type="submit" value="$SPAM" />spam!</button>
+		<input id="Spam" type="submit" value="$SPAM" name="spam">
+		<input id="ddos" type="submit" value="$DDOS" name="DDOS">
 	</form>
 
 	<form action="master_bot.py" method="POST" target="id_iframe">
 		<input type="text" name="command" cols="40" rows="4">
-		<button type="submit" value="Submit" />
+		<button type="submit" value="Submit">
 	</form>
+	
 
 	<iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe> 
 			
