@@ -8,6 +8,7 @@ import SimpleHTTPServer
 import SocketServer
 import logging
 import cgi
+import urllib2
 #---------------------------------- Functions -------------------------------------#
 def id_generator(size=10, chars=string.ascii_uppercase + string.ascii_lowercase):
     return ''.join(random.choice(chars) for _ in range(size))
@@ -88,28 +89,47 @@ def SEND():
         else:
             PRIVMSG(msg)
 
+"""def TCPHandler():
+    while True:
+        form = cgi.FieldStorage() 
+        cmd = form.getvalue('command')
+        print cmd"""
+
 class TCPHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_GET(self):
-        #logging.warning("======= GET STARTED =======")
-        #logging.warning(self.headers)
+        logging.warning("======= GET STARTED =======")
+        logging.warning(self.headers)
         SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 
-    """def do_POST(self):
-        #logging.warning("======= POST STARTED =======")
-        #logging.warning(self.headers)
+    def do_POST(self):
+        logging.warning("======= POST STARTED =======")
+        logging.warning(self.headers)
         form = cgi.FieldStorage(
             fp=self.rfile,
             headers=self.headers,
             environ={'REQUEST_METHOD':'POST',
-                 'CONTENT_TYPE':self.headers['Content-Type'],
-                 })
-        #logging.warning("======= POST VALUES =======")
-        #for item in form.list:
-        #    logging.warning(item)
-        #logging.warning("\n")
-        SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)"""
+                     'CONTENT_TYPE':self.headers['Content-Type'],
+                     })
+        logging.warning("======= POST VALUES =======")
+        for item in form.list:
+            logging.warning(item)
+    
+    variable = ""
+    value = ""
 
+    for key in form.keys():
+        variable = str(key)
+        value = str(form.getvalue(variable))
+    ### copy from SEND function ###
+    msg = value
+        if msg[0] == '/':
+                irc.send(msg.strip('/') + '\r\n')
+        else:
+            PRIVMSG(msg)
 
+   
+        SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+    
             
 
 if __name__ == "__main__":
@@ -125,9 +145,10 @@ if __name__ == "__main__":
     lock = thread.allocate_lock()
     thread.start_new_thread(RECEIVE,())
     thread.start_new_thread(SEND,())
-
+    #thread.start_new_thread(TCPHandler,())
     SocketServer.TCPServer.allow_reuse_address = True
     httpd = SocketServer.TCPServer(("", 8000), TCPHandler)
     httpd.serve_forever()
+
     while (True):
         pass 
