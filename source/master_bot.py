@@ -114,14 +114,14 @@ class TCPHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         for item in form.list:
             logging.warning(item)
     
-    variable = ""
-    value = ""
-
-    for key in form.keys():
-        variable = str(key)
-        value = str(form.getvalue(variable))
-    ### copy from SEND function ###
-    msg = value
+        variable = ""
+        value = ""
+    
+        for key in form.keys():
+            variable = str(key)
+            value = str(form.getvalue(variable))
+        ### copy from SEND function ###
+        msg = value
         if msg[0] == '/':
                 irc.send(msg.strip('/') + '\r\n')
         else:
