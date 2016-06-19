@@ -20,10 +20,14 @@ slave_bot.py
 
 index.html
 -master的網頁介面
-
+-顯示目前client之名單
 
 # master使用說明
 1. python master_bot.py 開啟master bot
-2. 開啟瀏覽器，網址輸入127.0.0.1:8000 ，即可在本地瀏覽器開啟index.html
-3. 可在index.html處輸入欲發送給所有slave之訊息
-4. 或是直接點按鈕送出特殊指令SPAM、DDOS
+2. 在此資料夾輸入指令php -s localhost
+3. 開啟瀏覽器，網址輸入127.0.0.1:8000 ，即可在本地瀏覽器開啟index.html
+4. 可在index.html處輸入欲發送給所有slave之訊息
+5. 或是直接點按鈕送出特殊指令SPAM、DDOS
+
+
+需先安裝php5
