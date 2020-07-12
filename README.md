@@ -1,5 +1,5 @@
 # Botnet
-僅模擬連線，spam、DDOS部分僅是傳字串，無實際攻擊功能。
+模擬Botnet連線架構，spam、DDOS部分僅是傳字串，無實際攻擊功能。
 
 old>>server.c 和 client.c － 用TCP寫的聊天室
 
